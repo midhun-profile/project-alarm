@@ -21,7 +21,7 @@ import { adminAuth } from "@/lib/firebaseAdmin";
 // }
 
 // api/login.js
-import { auth } from "../lib/firebaseConfig";
+import { auth } from "../../../lib/firebaseClient";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default async function loginUser(email, password) {

@@ -1,5 +1,5 @@
 // api/googleLogin.js
-import { auth, googleProvider } from "../lib/firebaseConfig";
+import { auth, googleProvider } from "../../../lib/firebaseClient";
 import { signInWithPopup } from "firebase/auth";
 
 export default async function loginWithGoogle() {
