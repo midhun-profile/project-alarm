@@ -1,0 +1,12 @@
+.glass-panel {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .signup-button{
+    background-color: #930df2;
+} 
+.signup-button:hover {
+    background-color: #7a0ad1; /* slightly darker hover */
+    box-shadow: 0 0 15px 2px rgba(147, 13, 242, 0.5); /* glow effect */
+  } 
