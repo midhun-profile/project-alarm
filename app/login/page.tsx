@@ -127,7 +127,7 @@ const LoginPage = () => {
                 />
               </svg>
               <h1 className="text-white tracking-light text-[32px] font-bold leading-tight">
-                QuantumLeap
+              EINEN
               </h1>
             </div>
             <p className="text-gray-400 text-lg">
