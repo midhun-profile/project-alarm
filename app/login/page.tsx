@@ -63,16 +63,19 @@ const LoginPage = () => {
     </svg>
   );
   
-
-  const handleEmailLogin = async (e) => {
+  const handleEmailLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       router.push("/");
-    } catch (err) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Unknown error occurred");
+      }
     } finally {
       setLoading(false);
     }
@@ -84,8 +87,12 @@ const LoginPage = () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       router.push("/");
-    } catch (err) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Unknown error occurred");
+      }
     } finally {
       setLoading(false);
     }

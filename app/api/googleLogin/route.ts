@@ -1,12 +1,31 @@
-// api/googleLogin.js
-import { auth, googleProvider } from "../../../lib/firebaseClient";
-import { signInWithPopup } from "firebase/auth";
+// /app/api/googleLogin/route.ts
+import { NextResponse } from "next/server";
+import admin from "firebase-admin";
 
-export default async function loginWithGoogle() {
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+    }),
+  });
+}
+
+export async function POST(req: Request) {
   try {
-    const result = await signInWithPopup(auth, googleProvider);
-    return { success: true, user: result.user };
+    const { idToken } = await req.json();
+
+    if (!idToken) {
+      return NextResponse.json({ error: "No token provided" }, { status: 400 });
+    }
+
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const { uid } = decodedToken;
+
+    return NextResponse.json({ uid }, { status: 200 });
   } catch (error) {
-    return { success: false, error: error.message };
+    console.error("Google login error:", error);
+    return NextResponse.json({ error: "Google login failed" }, { status: 500 });
   }
 }
